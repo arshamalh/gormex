@@ -67,7 +67,7 @@ func OneToOne() {
 	fmt.Println("Before Association", places)
 	db.Where("name=?", "Shivaji Nagar").Find(&places)
 	fmt.Println("After Association", places)
-	err := db.Model(&places).Association("town").Find(&places.Town).Error
+	err := db.Model(&places).Association("town").Find(&places.Town).Error()
 	fmt.Println("After Association", towns, places)
 	fmt.Println("After Association", towns, places, err)
 }
