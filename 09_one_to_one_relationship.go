@@ -3,10 +3,7 @@
 package main
 
 import (
-	_ "database/sql"
 	"fmt"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type Place struct {
@@ -22,12 +19,10 @@ type Town struct {
 }
 
 func OneToOne() {
-	db.DropTableIfExists(&Place{}, &Town{})
-
 	db.AutoMigrate(&Place{}, &Town{})
 
 	// We need to add foreign keys manually.
-	db.Model(&Place{}).AddForeignKey("town_id", "towns(id)", "CASCADE", "CASCADE")
+	// db.Model(&Place{}).AddForeignKey("town_id", "towns(id)", "CASCADE", "CASCADE")
 
 	t1 := Town{
 		Name: "Pune",
@@ -75,6 +70,4 @@ func OneToOne() {
 	err := db.Model(&places).Association("town").Find(&places.Town).Error
 	fmt.Println("After Association", towns, places)
 	fmt.Println("After Association", towns, places, err)
-
-	defer db.Close()
 }

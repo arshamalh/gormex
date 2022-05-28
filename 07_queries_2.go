@@ -5,18 +5,17 @@ package main
 import (
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func Queries_2() {
-	db, err := gorm.Open("mysql", "root:root@tcp(127.0.0.1:3306)/ormdemo?charset=utf8&parseTime=True")
+	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
+	db, err := gorm.Open(postgres.Open(dsn))
 	if err != nil {
 		log.Panic(err)
 	}
 	log.Println("Connection Established")
-	db.DropTableIfExists(&UserModel{})
 	db.AutoMigrate(&UserModel{})
 
 	user := &UserModel{Name: "John", Address: "New York"}

@@ -6,8 +6,6 @@ package main
 
 import (
 	"fmt"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type Customer struct {
@@ -24,9 +22,8 @@ type Contact struct {
 }
 
 func OneToMany() {
-	db.DropTableIfExists(&Contact{}, &Customer{})
 	db.AutoMigrate(&Customer{}, &Contact{})
-	db.Model(&Contact{}).AddForeignKey("cust_id", "customers(customer_id)", "CASCADE", "CASCADE") // Foreign key need to define manually
+	// db.Model(&Contact{}).AddForeignKey("cust_id", "customers(customer_id)", "CASCADE", "CASCADE") // Foreign key need to define manually
 
 	Custs1 := Customer{CustomerName: "John", Contacts: []Contact{
 		{CountryCode: 91, MobileNo: 956112},

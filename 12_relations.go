@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/mattn/go-sqlite3"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type UserR struct { // R is reduntant, it's here just to prevent naming conflicts
@@ -49,11 +49,11 @@ func Relations() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	db, err := gorm.Open("sqlite3", "/tmp/sqlite.db")
+	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
+	db, err = gorm.Open(postgres.Open(dsn))
 	if err != nil {
 		fmt.Println(err)
 	}
-	defer db.Close()
 
 	db.Exec("PRAGMA foreign_keys = ON;")
 
@@ -70,6 +70,6 @@ func Relations() {
 	db.Create(&user)
 
 	var u UserR
-	db.Debug().First(&u).Related(&u.Emails)
+	// db.Debug().First(&u).Related(&u.Emails)
 	fmt.Println(u.Emails)
 }

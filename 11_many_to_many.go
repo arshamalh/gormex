@@ -4,11 +4,10 @@
 package main
 
 import (
-	_ "database/sql"
 	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type UserL struct {
@@ -29,14 +28,16 @@ type UserLanguages struct {
 }
 
 func ManyToMany() {
-	db, _ := gorm.Open("mysql", "root:root@tcp(127.0.0.1:3306)/testmapping?charset=utf8&parseTime=True")
-	defer db.Close()
-	db.DropTableIfExists(&UserLanguages{}, &Language{}, &UserL{})
+	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
+	db, err := gorm.Open(postgres.Open(dsn))
+	if err != nil {
+		fmt.Println("Connection Failed to Open")
+	}
 	db.AutoMigrate(&UserL{}, &Language{}, &UserLanguages{})
 
 	//All foreign keys need to define here
-	db.Model(UserLanguages{}).AddForeignKey("user_l_id", "user_ls(id)", "CASCADE", "CASCADE")
-	db.Model(UserLanguages{}).AddForeignKey("language_id", "languages(id)", "CASCADE", "CASCADE")
+	// db.Model(UserLanguages{}).AddForeignKey("user_l_id", "user_ls(id)", "CASCADE", "CASCADE")
+	// db.Model(UserLanguages{}).AddForeignKey("language_id", "languages(id)", "CASCADE", "CASCADE")
 
 	langs := []Language{{Name: "English"}, {Name: "French"}}
 	//log.Println(langs)
@@ -56,8 +57,8 @@ func ManyToMany() {
 	//Fetching
 	user := &UserL{}
 	db.Debug().Where("uname=?", "Ray").Find(&user)
-	err := db.Debug().Model(&user).Association("Languages").Find(&user.Languages).Error
-	fmt.Println("User is now coming", user, err)
+	error_str := db.Debug().Model(&user).Association("Languages").Find(&user.Languages).Error()
+	fmt.Println("User is now coming", user, error_str)
 
 	//Deletion
 	fmt.Println(user, "to delete")

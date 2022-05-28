@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/kylelemons/godebug/pretty"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // Order
@@ -40,12 +40,12 @@ var (
 )
 
 func Relation() {
-	db, err := gorm.Open("sqlite3", "/tmp/gorm.db")
-	db.LogMode(true)
+	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
+	db, err := gorm.Open(postgres.Open(dsn))
+
 	if err != nil {
 		log.Panic(err)
 	}
-	defer db.Close()
 
 	// Migrate the schema
 	db.AutoMigrate(&OrderItem{}, &Order{}, &Item{})
