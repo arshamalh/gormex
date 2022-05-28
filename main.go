@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"gorm.io/driver/postgres"
@@ -16,4 +17,5 @@ func main() {
 	if err != nil {
 		log.Println("Connection Failed to Open")
 	}
+	fmt.Printf("Connection Established: %+v\n", db)
 }
