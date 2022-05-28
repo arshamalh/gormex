@@ -1,5 +1,7 @@
 // Create/Insert
-// In order to create or insert a record, you need to use the Create() function. The save() is also there that will return the primary key of the inserted record.
+// In order to create or insert a record,
+// you need to use the Create() function.
+// The save() is also there that will return the primary key of the inserted record.
 
 package main
 
