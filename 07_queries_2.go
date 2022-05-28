@@ -25,6 +25,7 @@ func Queries_2() {
 	//To insert or create the record.
 	//NOTE: we can insert multiple records too
 	db.Debug().Create(user)
+
 	//Also we can use save that will return primary key
 	db.Debug().Save(newUser)
 
@@ -53,6 +54,7 @@ func Queries_2() {
 			"Name":    "Taylor",
 			"Address": "Houston",
 		})
+
 	// Using Find()
 	db.Debug().Find(&user).Update("Address", "San Diego")
 

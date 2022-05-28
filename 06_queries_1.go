@@ -7,10 +7,13 @@ func Queries_1() {
 	users := []UserModel{}
 	// Get first record, order by primary key
 	db.First(&user)
+
 	// Get last record, order by primary key
 	db.Last(&user)
+
 	// Get all records
 	db.Find(&users)
+
 	// Get record with primary key (only works for integer primary key)
 	db.First(&user, 10)
 

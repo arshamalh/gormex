@@ -13,7 +13,7 @@ type Place struct {
 	ID     int `gorm:"primary_key"`
 	Name   string
 	Town   Town
-	TownId int `gorm:"ForeignKey:id"` //this foreignKey tag didn't works
+	TownId int `gorm:"ForeignKey:id"` // it seems this foreignKey tag doesn't work!
 }
 
 type Town struct {
@@ -25,7 +25,8 @@ func OneToOne() {
 	db.DropTableIfExists(&Place{}, &Town{})
 
 	db.AutoMigrate(&Place{}, &Town{})
-	//We need to add foreign keys manually.
+
+	// We need to add foreign keys manually.
 	db.Model(&Place{}).AddForeignKey("town_id", "towns(id)", "CASCADE", "CASCADE")
 
 	t1 := Town{
