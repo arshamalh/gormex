@@ -2,13 +2,10 @@ package main
 
 import "fmt"
 
-//StoryStatus indicates the current state of the story
 type StoryStatus string
 
 const (
-	//Progress indicates a story is currenty being written
-	Progress StoryStatus = "progress"
-	//Completed indicates a story was completed
+	Progress  StoryStatus = "progress"
 	Completed StoryStatus = "completed"
 )
 

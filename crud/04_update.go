@@ -1,8 +1,9 @@
-// Update
-// In order to update the records in the table using gorm, look into the below sample example.
-package main
+package crud
 
-func Update() {
+import "gorm.io/gorm"
+
+// In order to update the records in the table using gorm, look into the below sample example.
+func Update(db *gorm.DB) {
 	user := &UserModel{Name: "John", Address: "New York"}
 	// Select, edit, and save
 	db.Find(&user)

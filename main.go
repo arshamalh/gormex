@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gormex/crud"
 	"log"
 
 	"gorm.io/driver/postgres"
@@ -18,4 +19,8 @@ func main() {
 		log.Println("Connection Failed to Open")
 	}
 	fmt.Printf("Connection Established: %+v\n", db)
+
+	db.Debug().AutoMigrate(&crud.UserModel{})
+	// db.Migrator().DropTable(&UserModel{})
+	crud.Create(db)
 }

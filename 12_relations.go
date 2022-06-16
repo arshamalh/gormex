@@ -3,10 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"os"
 	"time"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -45,18 +43,6 @@ type LanguageR struct {
 }
 
 func Relations() {
-	err := os.Remove("/tmp/sqlite.db")
-	if err != nil {
-		fmt.Println(err)
-	}
-	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
-	db, err = gorm.Open(postgres.Open(dsn))
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	db.Exec("PRAGMA foreign_keys = ON;")
-
 	db.AutoMigrate(UserR{}, Email{}, Address{}, LanguageR{})
 
 	user := UserR{

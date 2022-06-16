@@ -1,8 +1,10 @@
 // Queries
 // In order to fetch the records from the database and do some SQL stuffs gorm has given some query functions. We’ll now do a quick discussion on it.
-package main
+package crud
 
-func Queries_1() {
+import "gorm.io/gorm"
+
+func Queries_1(db *gorm.DB) {
 	user := &UserModel{}
 	users := []UserModel{}
 	// Get first record, order by primary key

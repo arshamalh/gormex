@@ -1,23 +1,12 @@
-// Now just go through the program.
-
-package main
+package crud
 
 import (
 	"log"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func Queries_2() {
-	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
-	db, err := gorm.Open(postgres.Open(dsn))
-	if err != nil {
-		log.Panic(err)
-	}
-	log.Println("Connection Established")
-	db.AutoMigrate(&UserModel{})
-
+func Queries_2(db *gorm.DB) {
 	user := &UserModel{Name: "John", Address: "New York"}
 	newUser := &UserModel{Name: "Martin", Address: "Los Angeles"}
 

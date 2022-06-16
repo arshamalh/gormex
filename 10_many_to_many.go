@@ -5,9 +5,6 @@ package main
 
 import (
 	"fmt"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 type UserL struct {
@@ -22,30 +19,20 @@ type Language struct {
 	Name string
 }
 
+// It's not needed anymore, gorm will automatically create the join table
 type UserLanguages struct {
 	UserLId    int
 	LanguageId int
 }
 
 func ManyToMany() {
-	dsn := "host=localhost user=postgres password=pg2local dbname=simple_blog port=5432 sslmode=disable TimeZone=Asia/Tehran"
-	db, err := gorm.Open(postgres.Open(dsn))
-	if err != nil {
-		fmt.Println("Connection Failed to Open")
-	}
-	db.AutoMigrate(&UserL{}, &Language{}, &UserLanguages{})
-
-	//All foreign keys need to define here
-	// db.Model(UserLanguages{}).AddForeignKey("user_l_id", "user_ls(id)", "CASCADE", "CASCADE")
-	// db.Model(UserLanguages{}).AddForeignKey("language_id", "languages(id)", "CASCADE", "CASCADE")
-
+	db.AutoMigrate(&UserL{}, &Language{})
 	langs := []Language{{Name: "English"}, {Name: "French"}}
-	//log.Println(langs)
 
 	user1 := UserL{Uname: "John", Languages: langs}
 	user2 := UserL{Uname: "Martin", Languages: langs}
 	user3 := UserL{Uname: "Ray", Languages: langs}
-	db.Save(&user1) //save is happening
+	db.Save(&user1)
 	db.Save(&user2)
 	db.Save(&user3)
 

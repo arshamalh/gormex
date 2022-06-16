@@ -1,8 +1,8 @@
-// Transaction
+package crud
 
-package main
+import "gorm.io/gorm"
 
-func Transaction() {
+func Transaction(db *gorm.DB) {
 	user := &UserModel{Name: "John", Address: "New York"}
 	tx := db.Begin()
 	err := tx.Create(&user).Error
